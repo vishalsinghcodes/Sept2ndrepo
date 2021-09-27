@@ -9,6 +9,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -53,6 +55,21 @@ public class Passtest {
 		
 		Thread.sleep(5000L);
 		driver.close();	
+	}
+	
+	@Test
+	public void Failtest() throws IOException {
+		ExtentTest test = extent.createTest("test2");
+		System.setProperty("webdriver.gecko.driver","F:\\Udemy Selenium\\WebDrivers\\FirefoxGecko\\geckodriver-v0.29.1-win64\\geckodriver.exe");
+		WebDriver driver = new FirefoxDriver();
+		driver.get("https://login.salesforce.com/?locale=in");
+		String projectpath = System.getProperty("user.dir");
+		File src = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFileToDirectory(src, new File(projectpath+"\\ScreenShots"));
+		Assert.assertTrue(false);
+		test.fail("failed");
+		extent.flush();
+		
 	}
 
 }
